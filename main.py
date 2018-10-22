@@ -2,6 +2,7 @@ import tweepy
 import pickle
 import os
 import operator
+import configparser
 
 # Sobre url de busca no twitter
 # https://developer.twitter.com/en/docs/tweets/search/api-reference/get-search-tweets.html
@@ -9,17 +10,14 @@ import operator
 # https://developer.twitter.com/en/docs
 
 
-class Tweet():
+# Carrega as chaves de acesso
+config = configparser.ConfigParser()
+config.read('config.ini')
 
-    def __init__(self, id, text):
-        self.id = id
-        self.text = text
-
-
-consumer_key = "====="
-consumer_secret = "====="
-access_token = "===="
-access_token_secret = "==="
+consumer_key = config['CONSUMER KEY']['consumer_key']
+consumer_secret = config['CONSUMER KEY']['consumer_secret']
+access_token = config['ACCESS TOKEN']['access_token']
+access_token_secret = config['ACCESS TOKEN']['access_token_secret']
 
 auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
 auth.set_access_token(access_token, access_token_secret)
