@@ -16,10 +16,10 @@ class Tweet():
         self.text = text
 
 
-consumer_key = "9JtWozzJEcy2abgRfg6C67eVK"
-consumer_secret = "kVXm9RndCb2wCl2jW0DEcGtPo6n0QCposqlk4pLVmQzEbmGB5Q"
-access_token = "2202275389-r7PYmydCUldXbpDHOarcWPnK3VBcC1HwhM70Usq"
-access_token_secret = "csCVs4Gc4WVyuCjU1QHtvLjv4offqFhctCHkheqRRXE0V"
+consumer_key = "====="
+consumer_secret = "====="
+access_token = "===="
+access_token_secret = "==="
 
 auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
 auth.set_access_token(access_token, access_token_secret)
