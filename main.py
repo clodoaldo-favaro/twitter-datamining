@@ -3,11 +3,13 @@ import pickle
 import os
 import operator
 import configparser
+import json
 
 # Sobre url de busca no twitter
 # https://developer.twitter.com/en/docs/tweets/search/api-reference/get-search-tweets.html
 # https://developer.twitter.com/en/docs/tweets/search/guides/standard-operators
 # https://developer.twitter.com/en/docs
+
 
 
 # Carrega as chaves de acesso
@@ -30,20 +32,36 @@ id_list = {}
 
 # Retorna 100 tweets
 tweets = tweepy.Cursor(api.search, q="ps4 playstation4 -filter:retweets", rpp=100, result_type='recent',
-                       tweet_mode='extended', exclude_replies=True).items(10)
+                       tweet_mode='extended', exclude_replies=True).items(3)
 
-# Grava os textos dos tweets em um dict
+# Grava cada tweet em uma lista de json
+lista_tweets = []
+tweet_json = {}
 for tweet in tweets:
     id_list[tweet.id_str] = tweet.full_text
-    print('tweet id:', tweet.id_str)
-    print('user id:', tweet.user.id_str)
-    print('full text:', tweet.full_text)
-    print('SHOWING HASHTAGS')
+    tweet_json['tweet_id'] = tweet.id_str
+    tweet_json['user_id'] = tweet.user.id_str
+    tweet_json['text'] = tweet.full_text
+
+    # Percorre as hashtags do tweet, adicionando cada uma à lista
+    hashtags_list = []
     for hashtag in tweet.entities['hashtags']:
-        print(hashtag['text'])
+        hashtags_list.append(hashtag['text'])
+    # Adiciona a lista no dict tweet_json
+    tweet_json['hashtags'] = hashtags_list
+    # Adiciona o tweet_json à lista de objetos json
+    lista_tweets.append(tweet_json)
+
+lista_json = {"tweets": lista_tweets}
+
+# Serializa os objetos json e salva em um arquivo
+with open('tweets.json', 'w+') as json_file:
+    json.dump(lista_json, json_file)
+
+
+
 exit()
-# Salva o id mais antigo, para que a próxima busca seja a partir dele pra baixo
-max_id = min(id_list.keys())
+
 
 # Loop para pegar tweets mais antigos
 i = 1
