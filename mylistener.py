@@ -32,6 +32,8 @@ class Listener(tweepy.StreamListener):
                         #print(len(status._json['extended_tweet']['full_text']))
                         #print(status._json['extended_tweet']['full_text'])
                     f.write(data + '\n')
+                else:
+                    print('RETWEET')
 
 
 
