@@ -35,7 +35,7 @@ irrelevantes = ['e', 'ou', 'para', 'em', 'na', 'no', 'lá', 'quando', 'que', 'a'
 stream_listener = mylistener.Listener()
 stream = tweepy.Stream(auth = api.auth, listener = stream_listener, tweet_mode= 'extended')
 
-stream.filter(track=["ps4", "playstation4", "playstation 4"])
+stream.filter(track=["ps4", "playstation4", "playstation 4", "-filter:retweets"])
 
 
 

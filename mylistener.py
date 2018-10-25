@@ -25,12 +25,15 @@ class Listener(tweepy.StreamListener):
             with open('tweets.json', 'a') as f:
 
                 if (not status._json['retweeted']) and (not status._json['text'].startswith('RT @')):
-                    print(status)
+                    #print(status)
                     data = json.dumps(status._json)
+                    if 'extended_tweet' in status._json:
+                        print('TWEET GRANDE')
+                        print(len(status._json['extended_tweet']['full_text']))
+                        print(status._json['extended_tweet']['full_text'])
                     f.write(data + '\n')
 
-                else:
-                    print('RETWEET NO NO NO')
+
 
         except BaseException as e:
             print('Error on_data: {error_message}'.format(error_message=e))
