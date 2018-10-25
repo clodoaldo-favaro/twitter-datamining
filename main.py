@@ -1,10 +1,8 @@
 import tweepy
-import pickle
-import os
-import operator
 import configparser
 import tweet
 import jsonpickle
+import mylistener
 
 
 
@@ -36,72 +34,20 @@ irrelevantes = ['e', 'ou', 'para', 'em', 'na', 'no', 'lá', 'quando', 'que', 'a'
                 'me', 'de', 'da', 'do']
 
 
-# Retorna 100 tweets
-tweets = tweepy.Cursor(api.search, q="ps4 playstation4 -filter:retweets", rpp=100, result_type='recent',
-                       tweet_mode='extended', exclude_replies=True).items(100)
 
+# Abrindo a stream
+stream_listener = mylistener.Listener()
+stream = tweepy.Stream(auth = api.auth, listener = stream_listener)
 
- 
-id_list = []
-lista_tweets = []
-requisicoes = 1
-
-
-# Salva os dados dos tweets, e continua até o usuário interromper
-while True:
-    
-    for t in tweets:
-        print(t.id)
-        id_list.append(t.id)
-        
-
-        # Percorre as hashtags do tweet, adicionando cada uma à lista
-        hashtags_list = []
-        for hashtag in t.entities['hashtags']:
-            hashtags_list.append(hashtag['text'])
-            
-        # Cria um objeto tweet
-        current_tweet = tweet.Tweet(t.id_str, t.full_text, hashtags_list, t.user.id_str)
-        
-        
-        
-        # Adiciona o objeto tweet 
-        lista_tweets.append(current_tweet)
-
-    
-    print('Requisicao: {requisicoes}'.format(requisicoes = requisicoes))
-    #opcao = input('Deseja continuar (Y/N)?')
-    requisicoes += 1
-    #if opcao.upper() == 'N':
-    #    break
-    
-    
-    if requisicoes > 10000:
-        break
-    # Salva o menor id dos tweets (mais antigo)
-    max_id = min(id_list)
-    # Pega os próximos 100 tweets com id menor que o id mínimo da requisição anterior
-    tweets = tweepy.Cursor(api.search, q="ps4 playstation4 -filter:retweets", rpp=100, result_type='recent',
-                           tweet_mode='extended', max_id=max_id - 1, exclude_replies=True).items(100)
-    
-    
-    
-    
-
-# Serializa os objetos json e salva em um arquivo
-with open('tweets.json', 'w', encoding='utf-8') as json_file:
-    json_file.write(jsonpickle.encode(lista_tweets))
+stream.filter(track=["ps4", "playstation4", "playstation 4"])
 
 
 
 
 
 
-print('Quantidade de tweets salvos: {qtde_tweets}: '.format(qtde_tweets = len(id_list)))
-    
 
-    
-    
+
 
 
 
