@@ -7,7 +7,6 @@ import mylistener
 # https://developer.twitter.com/en/docs/tweets/search/guides/standard-operators
 # https://developer.twitter.com/en/docs
 
-
 # Carrega as chaves de acesso
 config = configparser.ConfigParser()
 config.read('config.ini')
@@ -33,7 +32,7 @@ irrelevantes = ['e', 'ou', 'para', 'em', 'na', 'no', 'lá', 'quando', 'que', 'a'
 stream_listener = mylistener.Listener()
 stream = tweepy.Stream(auth = api.auth, listener = stream_listener, tweet_mode= 'extended')
 
-stream.filter(track=["ps4", "playstation4", "playstation 4", "-filter:retweets"])
+stream.filter(track=["ps4", "playstation4", "playstation 4"])
 
 
 
