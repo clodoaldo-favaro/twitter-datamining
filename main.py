@@ -1,7 +1,5 @@
 import tweepy
 import configparser
-import tweet
-import jsonpickle
 import mylistener
 
 # Sobre url de busca no twitter
