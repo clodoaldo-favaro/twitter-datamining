@@ -1,27 +1,52 @@
 import tweepy
-import json
-import sys
+from queue import Queue
+from threading import Thread
+
 glob_tweet_count = 0
+
+
 class Listener(tweepy.StreamListener):
+
+
+    def __init__(self, q = Queue()):
+        print('init da classe')
+        super().__init__()
+        num_worker_threads = 4
+        self.q = q
+        for i in range(num_worker_threads):
+            t = Thread(target=self.salvar_tweet())
+            t.daemon = True
+            t.start()
+
+
+    def salvar_tweet(self):
+        while True:
+            tweet = self.q.get()
+            if (not tweet._json['retweeted']) and (not tweet._json['text'].startswith('RT @')):
+                try:
+                    with open('tweets.json', 'a') as f:
+                        f.write(tweet + '\n')
+                        global glob_tweet_count
+                        glob_tweet_count += 1
+                        print(glob_tweet_count)
+                except BaseException as e:
+                    print('Error on_data: {error_message}'.format(error_message=e))
+
+        return True
+
+
 
     def on_status(self, status):
 
-        try:
-            with open('tweets.json', 'a') as f:
-                if (not status._json['retweeted']) and (not status._json['text'].startswith('RT @')):
-                    global glob_tweet_count
-                    glob_tweet_count += 1
-                    data = json.dumps(status._json)
-                    f.write(data + '\n')
-                    print(glob_tweet_count)
-                    #print(sys.getsizeof(status._json))
-        except BaseException as e:
-            print('Error on_data: {error_message}'.format(error_message=e))
+        if not status.retweeted_status:
+            print(status.text)
+            self.q.put(status)
 
-        return True
+
 
 
     def on_error(self, status_code):
-        print(status_code)
-        return True
+        if status_code == 420:
+            return False
+
 

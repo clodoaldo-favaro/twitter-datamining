@@ -7,32 +7,36 @@ import mylistener
 # https://developer.twitter.com/en/docs/tweets/search/guides/standard-operators
 # https://developer.twitter.com/en/docs
 
-# Carrega as chaves de acesso
-config = configparser.ConfigParser()
-config.read('config.ini')
-
-# Salva os dados para acesso
-consumer_key = config['CONSUMER KEY']['consumer_key']
-consumer_secret = config['CONSUMER KEY']['consumer_secret']
-access_token = config['ACCESS TOKEN']['access_token']
-access_token_secret = config['ACCESS TOKEN']['access_token_secret']
-
-# Acessa a api do Twitter
-auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
-auth.set_access_token(access_token, access_token_secret)
-api = tweepy.API(auth, wait_on_rate_limit=True, wait_on_rate_limit_notify=True)
 
 
-# Define os termos a serem ignorados no processamento dos textos
-irrelevantes = ['e', 'ou', 'para', 'em', 'na', 'no', 'lá', 'quando', 'que', 'a', 'o', 'mas', 'mais', 'porque', 'por',
-                'me', 'de', 'da', 'do']
+
+if __name__ == '__main__':
 
 
-# Abrindo a stream
-stream_listener = mylistener.Listener()
-stream = tweepy.Stream(auth = api.auth, listener = stream_listener, tweet_mode= 'extended')
+    # Carrega as chaves de acesso
+    config = configparser.ConfigParser()
+    config.read('config.ini')
 
-stream.filter(track=["ps4", "playstation4", "playstation 4"])
+    # Salva os dados para acesso
+    consumer_key = config['CONSUMER KEY']['consumer_key']
+    consumer_secret = config['CONSUMER KEY']['consumer_secret']
+    access_token = config['ACCESS TOKEN']['access_token']
+    access_token_secret = config['ACCESS TOKEN']['access_token_secret']
+
+    # Autentica
+    auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
+    auth.set_access_token(access_token, access_token_secret)
+
+    # Cria objeto para baixar dados do Twitter
+    api = tweepy.API(auth, wait_on_rate_limit=True, wait_on_rate_limit_notify=True)
+
+
+    # Cria um listener
+    stream_listener = mylistener.Listener()
+    # Cria um objeto Stream
+    stream = tweepy.Stream(auth = api.auth, listener = stream_listener, tweet_mode= 'extended')
+    # Começa o stream
+    stream.filter(track=["ps4", "playstation4", "playstation 4"],  stall_warnings=True)
 
 
 
