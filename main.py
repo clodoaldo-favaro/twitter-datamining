@@ -1,6 +1,7 @@
 import tweepy
 import configparser
 import mylistener
+import sys
 
 # Sobre url de busca no twitter
 # https://developer.twitter.com/en/docs/tweets/search/api-reference/get-search-tweets.html
@@ -37,6 +38,7 @@ if __name__ == '__main__':
     stream = tweepy.Stream(auth = api.auth, listener = stream_listener, tweet_mode= 'extended')
     # Começa o stream
     stream.filter(track=["ps4", "playstation4", "playstation 4"],  stall_warnings=True)
+
 
 
 
