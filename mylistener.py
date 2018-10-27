@@ -13,8 +13,8 @@ class Listener(tweepy.StreamListener):
                     glob_tweet_count += 1
                     data = json.dumps(status._json)
                     f.write(data + '\n')
-                    print("Tweet: {}".format(glob_tweet_count))
-                    print(sys.getsizeof(status._json))
+                    print(glob_tweet_count)
+                    #print(sys.getsizeof(status._json))
         except BaseException as e:
             print('Error on_data: {error_message}'.format(error_message=e))
 
