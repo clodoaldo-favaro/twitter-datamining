@@ -18,7 +18,7 @@ db = client.tweets
 # Cria uma collection (ou acessa uma)
 tweets_resumidos = db.tweets_resumidos
 
-
+contador = 1
 
 # Cria um dict (documento json) para todos os tweets no arquivo
 with open('tweets.json', 'r') as f:
@@ -30,7 +30,7 @@ with open('tweets.json', 'r') as f:
             texto = tweet['text']
         # Cria um objeto json apenas com as informacoes necessarias
         tweet_resumido = {
-            'tweet_id': tweet['id'],
+            'tweet_id': tweet['id_str'],
             'text': texto,
             'tweet_date': tweet['created_at'],
             'user_id': tweet['user']['id'],
@@ -46,11 +46,13 @@ with open('tweets.json', 'r') as f:
             # Adiciona a lista de hashtags ao json
             tweet_resumido['hashtags'] = lista_hashtags
 
-        print('Tamanho do tweet resumido: ', sys.getsizeof(tweet_resumido))
 
         # Insere um documento em uma colecao
         status_id = tweets_resumidos.insert_one(tweet_resumido).inserted_id
-        break
+
+        print('Tweet gravado', contador, '   id: ', status_id)
+        contador += 1
+
 
 
 
