@@ -32,10 +32,11 @@ with open('tweets.json', 'r') as f:
         tweet_resumido = {
             'tweet_id': tweet['id'],
             'text': texto,
-            #'tweet_date': tweet['created_at'],
-            #'user_id': tweet['user']['id'],
-            #'user_screen_name': tweet['user']['screen_name'],
-            #'user_name': tweet['user']['name']
+            'tweet_date': tweet['created_at'],
+            'user_id': tweet['user']['id'],
+            'user_screen_name': tweet['user']['screen_name'],
+            'user_name': tweet['user']['name'],
+            'user_location':tweet['user']['location']
         }
         # Só adiciona hashtags se existirem
         lista_hashtags = []
