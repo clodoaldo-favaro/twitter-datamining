@@ -2,6 +2,8 @@ import pymongo
 import configparser
 import pprint
 import matplotlib.pyplot as plt
+from matplotlib import rcParams
+rcParams.update({'figure.autolayout': True})
 
 glob_tweet_count = 0
 
@@ -34,8 +36,9 @@ for jogo in lista_jogos:
 pprint.pprint(frequencia_jogo)
 
 plt.bar(range(len(frequencia_jogo)),frequencia_jogo.values(), align='center')
-plt.xticks(range(len(frequencia_jogo)), list(frequencia_jogo.keys()), rotation='vertical')
+plt.xticks(range(len(frequencia_jogo)), list(frequencia_jogo.keys()), rotation='vertical', fontsize=6)
+plt.xlabel('Jogos', fontsize=12)
 
-
-plt.tight_layout()
+#plt.tight_layout()
+plt.plot(figsize=(1024, 768))
 plt.show()
