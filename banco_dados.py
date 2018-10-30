@@ -50,7 +50,7 @@ with open('tweets.json', 'r') as f:
         # Insere um documento em uma colecao
         result = tweets_resumidos.update_one({'tweet_id': tweet_resumido['tweet_id']}, {'$set':tweet_resumido}, upsert=True)
 
-        print('Tweet gravado', contador, '   id: ', result)
+        print('Tweet gravado', contador, '   nova id: ', result.upserted_id)
         contador += 1
 
 
