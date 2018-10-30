@@ -62,7 +62,7 @@ class Listener(tweepy.StreamListener):
         result = tweets_resumidos.update_one({'tweet_id': tweet_resumido['tweet_id']}, {'$set':tweet_resumido}, upsert=True)
 
         glob_tweet_count += 1
-        print('Tweets gravados:', glob_tweet_count, 'id:', result.upserted_id)
+        print('Tweets gravados:', glob_tweet_count, 'id:', result.upserted_id, 'tweet_id:', tweet_resumido['tweet_id'])
 
 
 
