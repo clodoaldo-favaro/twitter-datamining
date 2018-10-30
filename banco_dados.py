@@ -1,7 +1,7 @@
 import pymongo
 import json
 import configparser
-import sys
+
 
 # Carrega senha para acesso ao banco de dados
 config = configparser.ConfigParser()
