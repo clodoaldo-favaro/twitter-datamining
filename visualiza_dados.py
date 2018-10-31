@@ -44,6 +44,6 @@ pprint.pprint(frequencia_jogo)
 #plt.plot(figsize=(1024, 768))
 #plt.show()
 
-wordcloud = WordCloud(width=800, height=600).generate_from_frequencies(frequencia_jogo, 80)
+wordcloud = WordCloud(width=1024, height=768).generate_from_frequencies(frequencia_jogo, 100)
 plt.imshow(wordcloud, interpolation='bilinear')
 plt.show()
