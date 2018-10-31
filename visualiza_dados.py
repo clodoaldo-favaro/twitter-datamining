@@ -4,6 +4,7 @@ import pprint
 import matplotlib.pyplot as plt
 from matplotlib import rcParams
 rcParams.update({'figure.autolayout': True})
+from wordcloud import WordCloud
 
 glob_tweet_count = 0
 
@@ -35,10 +36,14 @@ for jogo in lista_jogos:
 
 pprint.pprint(frequencia_jogo)
 
-plt.bar(range(len(frequencia_jogo)),frequencia_jogo.values(), align='center')
-plt.xticks(range(len(frequencia_jogo)), list(frequencia_jogo.keys()), rotation='vertical', fontsize=6)
-plt.xlabel('Jogos', fontsize=12)
+#plt.bar(range(len(frequencia_jogo)),frequencia_jogo.values(), align='center')
+#plt.xticks(range(len(frequencia_jogo)), list(frequencia_jogo.keys()), rotation='vertical', fontsize=6)
+#plt.xlabel('Jogos', fontsize=12)
 
 #plt.tight_layout()
-plt.plot(figsize=(1024, 768))
+#plt.plot(figsize=(1024, 768))
+#plt.show()
+
+wordcloud = WordCloud(width=800, height=600).generate_from_frequencies(frequencia_jogo, 80)
+plt.imshow(wordcloud, interpolation='bilinear')
 plt.show()
