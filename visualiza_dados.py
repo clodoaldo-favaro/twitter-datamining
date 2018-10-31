@@ -6,7 +6,6 @@ from matplotlib import rcParams
 rcParams.update({'figure.autolayout': True})
 from wordcloud import WordCloud
 
-glob_tweet_count = 0
 
 # Carrega senha para acesso ao banco de dados
 config = configparser.ConfigParser()
@@ -19,8 +18,6 @@ client = pymongo.MongoClient("mongodb+srv://clodo:" + password + "@orgarq-bcluw.
 
 # Acessa a base de dados (ou cria ela)
 db = client.tweets
-
-
 
 
 lista_jogos = ['WITCHER 3', 'METAL GEAR SOLID V', 'RED DEAD REDEMPTION 2', 'SPIDER-MAN', 'SHADOW OF THE TOMB RAIDER',
@@ -36,14 +33,19 @@ for jogo in lista_jogos:
 
 pprint.pprint(frequencia_jogo)
 
-#plt.bar(range(len(frequencia_jogo)),frequencia_jogo.values(), align='center')
-#plt.xticks(range(len(frequencia_jogo)), list(frequencia_jogo.keys()), rotation='vertical', fontsize=6)
-#plt.xlabel('Jogos', fontsize=12)
 
-#plt.tight_layout()
-#plt.plot(figsize=(1024, 768))
-#plt.show()
+print('1. Gráfico de barras')
+print('2. Wordcloud')
+opcao = input('Selecione a opcao desejada:\t\t')
 
-wordcloud = WordCloud(width=1024, height=768).generate_from_frequencies(frequencia_jogo, 100)
-plt.imshow(wordcloud, interpolation='bilinear')
+if opcao == '1':
+    plt.bar(range(len(frequencia_jogo)),frequencia_jogo.values(), align='center')
+    plt.xticks(range(len(frequencia_jogo)), list(frequencia_jogo.keys()), rotation='vertical', fontsize=6)
+    plt.xlabel('Jogos', fontsize=12)
+    plt.tight_layout()
+    plt.plot(figsize=(1024, 768))
+elif opcao == '2':
+    wordcloud = WordCloud(width=1024, height=768).generate_from_frequencies(frequencia_jogo, 100)
+    plt.imshow(wordcloud, interpolation='bilinear')
+
 plt.show()
