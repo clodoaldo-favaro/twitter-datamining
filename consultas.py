@@ -1,8 +1,6 @@
-import tweepy
 import pymongo
-import json
 import configparser
-import pprint
+
 
 glob_tweet_count = 0
 
@@ -21,18 +19,12 @@ db = client.tweets
 
 
 
-lista_jogos = ['WITCHER 3', 'METAL GEAR SOLID V', 'RED DEAD REDEMPTION 2', 'SPIDER-MAN', 'SHADOW OF THE TOMB RAIDER',
-               'GOD OF WAR', 'FORTNITE', 'GTA V', 'FIFA 19', 'HORIZON ZERO DAWN', "ASSASSIN'S CREED ODYSSEY", 'SOUL CALIBUR VI',
-               'CALL OF DUTY: BLACK OPS 4', 'PES 2019', 'MADDEN NFL 19', 'DETROIT: BECOME HUMAN',
-               'FALLOUT SHELTER', "ASSASSIN'S CREED BROTHERHOOD", 'THE ELDER SCROLLS ONLINE']
+jogo_consulta = input('Informe o jogo que deseja procurar:\t\t')
 
+resultado = db.tweets_resumidos.find({'text': {'$regex': jogo_consulta, '$options': 'i'}})
 
-
-frequencia_jogo = {}
-for jogo in lista_jogos:
-    frequencia_jogo[jogo] = db.tweets_resumidos.count_documents({'text': {'$regex': jogo, '$options': 'i'}})
-
-pprint.pprint(frequencia_jogo)
+for tweet in resultado:
+    print(tweet['text'])
 
 
 
