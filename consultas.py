@@ -17,14 +17,58 @@ client = pymongo.MongoClient("mongodb+srv://clodo:" + password + "@orgarq-bcluw.
 db = client.tweets
 
 
+def consulta_nome_jogo(jogo_consulta):
+    resultado = db.tweets_resumidos.find({'text': {'$regex': jogo_consulta, '$options': 'i'}})
+    return resultado
+
+def consulta_nome_usuario(nome_usuario_consulta):
+    resultado = db.tweets_resumidos.find({'user_screen_name': nome_usuario_consulta})
+    return resultado
+
+def consulta_id_tweet(tweet_id_consulta):
+    resultado = db.tweets_resumidos.find_one({'tweet_id':tweet_id_consulta})
+    return resultado
 
 
-jogo_consulta = input('Informe o jogo que deseja procurar:\t\t')
+def mostrar_tweet(resultado_pesquisa):
+    for tweet in resultado_pesquisa:
+        print(tweet['text'])
 
-resultado = db.tweets_resumidos.find({'text': {'$regex': jogo_consulta, '$options': 'i'}})
-
-for tweet in resultado:
+def mostrar_tweet_unico(tweet):
     print(tweet['text'])
+
+
+
+def main():
+    opcao = 0
+    while True:
+        opcao = input('1. CONSULTAR NOME JOGO\n2. CONSULTAR NOME USUARIO\n3. CONSULTAR ID TWEET\n4. SAIR\n')
+        if opcao == '4':
+            break
+        elif opcao == '1':
+            consulta = input('Informe o nome do jogo\t\t')
+            resultado = consulta_nome_jogo(consulta)
+            mostrar_tweet(resultado)
+        elif opcao == '2':
+            consulta = input('Informe o nome do usuario\t\t')
+            resultado = consulta_nome_usuario(consulta)
+            mostrar_tweet(resultado)
+        elif opcao == '3':
+            consulta = input('Informe o id do tweet\t\t')
+            resultado = consulta_id_tweet(consulta)
+            mostrar_tweet_unico(resultado)
+        else:
+            print('Opcao invalida')
+
+
+if __name__ == '__main__':
+    main()
+
+
+
+
+
+
 
 
 
