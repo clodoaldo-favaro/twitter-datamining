@@ -4,8 +4,6 @@ from Crypto import Random
 from Crypto.Cipher import AES
 import os
 import os.path
-from os import listdir
-from os.path import isfile, join
 import time
 
 
@@ -57,8 +55,8 @@ if os.path.isfile('senha.txt.enc'):
         p = ''
         with open("senha.txt", "r") as f:
             p = f.readlines()
+        enc.encrypt_file("senha.txt")
         if p[0] == password:
-            enc.encrypt_file("senha.txt")
             break
 
 
