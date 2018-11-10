@@ -6,9 +6,6 @@ def ler_tweets():
     os.system('python main.py')
 
 
-
-
-
 def visualizar():
     os.system('python visualiza_dados.py')
 
