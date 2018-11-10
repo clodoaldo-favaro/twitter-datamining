@@ -1,14 +1,12 @@
 import tkinter as tk
 import os
-from Crypto import Random
-from Crypto.Cipher import AES
+
 
 def ler_tweets():
     os.system('python main.py')
 
 
-def criptografar():
-    os.system('python cripto.py')
+
 
 
 def visualizar():
@@ -29,10 +27,6 @@ btn_ler_tweets = tk.Button(frame,
 btn_ler_tweets.pack(side=tk.LEFT)
 
 
-btn_crypto = tk.Button(frame,
-                   text="CRIPTOGRAFIA",
-                   command=criptografar)
-btn_crypto.pack(side=tk.LEFT)
 
 btn_visualiza = tk.Button(frame, text="VISUALIZA", command=visualizar)
 btn_visualiza.pack(side=tk.RIGHT)
