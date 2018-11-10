@@ -1,5 +1,7 @@
 import tkinter as tk
 import os
+from Crypto import Random
+from Crypto.Cipher import AES
 
 def ler_tweets():
     os.system('python main.py')

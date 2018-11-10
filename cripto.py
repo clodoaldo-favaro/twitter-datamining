@@ -50,7 +50,7 @@ clear = lambda: os.system('cls')
 
 if os.path.isfile('senha.txt.enc'):
     while True:
-        password = str(input("Enter password: "))
+        password = str(input("Informe a senha: "))
         enc.decrypt_file("senha.txt.enc")
         p = ''
         with open("senha.txt", "r") as f:
@@ -58,34 +58,30 @@ if os.path.isfile('senha.txt.enc'):
         enc.encrypt_file("senha.txt")
         if p[0] == password:
             break
-
-
-
     while True:
         clear()
         choice = int(input("1. CRIPTOGRAFAR\n2. DESCRIPTOGRAFAR\n3. SAIR\n"))
         clear()
         if choice == 1:
-            enc.encrypt_file(str(input("Enter name of file to encrypt: ")))
+            enc.encrypt_file('config.ini')
         elif choice == 2:
-            enc.decrypt_file(str(input("Enter name of file to decrypt: ")))
+            enc.decrypt_file('config.ini.enc')
         elif choice == 3:
             exit()
         else:
-            print("Please select a valid option!")
-
+            print("Selecione uma opção válida!")
 else:
     while True:
         clear()
-        password = str(input("Setting up stuff. Enter a password that will be used for decryption: "))
-        repassword = str(input("Confirm password: "))
+        password = str(input("Instalando. Informe a senha que será usada para descriptografar: "))
+        repassword = str(input("Repita a senha: "))
         if password == repassword:
             break
         else:
-            print("Passwords Mismatched!")
+            print("Senhas diferentes!")
     f = open("senha.txt", "w+")
     f.write(password)
     f.close()
     enc.encrypt_file("senha.txt")
-    print("Please restart the program to complete the setup")
-time.sleep(15)
+    print("Reinicie o programa para completar o processo")
+time.sleep(5)
