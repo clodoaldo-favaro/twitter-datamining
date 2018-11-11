@@ -1,7 +1,7 @@
 import tweepy
 import configparser
 import mylistener
-import sys
+from criptografia import encrypt, decrypt
 
 # Sobre url de busca no twitter
 # https://developer.twitter.com/en/docs/tweets/search/api-reference/get-search-tweets.html
@@ -16,6 +16,7 @@ if __name__ == '__main__':
 
     # Carrega as chaves de acesso
     config = configparser.ConfigParser()
+    # Descriptografa o arquivo
     config.read('config.ini')
 
     # Salva os dados para acesso

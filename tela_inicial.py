@@ -2,6 +2,7 @@ import tkinter as tk
 import os
 
 
+
 def ler_tweets():
     os.system('python main.py')
 
