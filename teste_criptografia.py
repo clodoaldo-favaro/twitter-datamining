@@ -2,6 +2,23 @@ from criptografia import encrypt, decrypt
 import random
 import string
 import os
+import filecmp
+# Comparar linhas de arquivos
+def arquivos_iguais(arquivo1, arquivo2):
+    lista1, lista2 = [], []
+    for line in arquivo1:
+        lista1.append(line)
+    for line in arquivo2:
+        lista2.append(line)
+    return lista1 == lista2
+    
+
+    
+
+
+
+
+
 
 # Gera arquivos com strings aleatórias
 arquivos = []
@@ -32,12 +49,14 @@ for arq in encriptografados:
     i += 1
 
 # Compara os arquivos descriptogrados com os originais
-with open('teste_criptografia_resultado.txt', 'w') as log:
-    for i in range(0, 10):
-        arquivo_original = arquivos[i]
-        arquivo_descriptografado = descriptografados[i]
-        print('Comparando... {0}  <=>  {1}'.format(arquivo_original, arquivo_descriptografado))
-        os.system('fc ' + arquivo_original + ' ' + arquivo_descriptografado )
+for i in range(0, 10):
+    arquivo_original = arquivos[i]
+    arquivo_descriptografado = descriptografados[i]
+    with open(arquivo_original, 'r') as orig, open(arquivo_descriptografado, 'r') as descr:
+        if not arquivos_iguais(orig, descr):
+            print('{0} difere de {1}'.format(arquivo_original, arquivo_descriptografado)) 
+        
+        
 
 
 
