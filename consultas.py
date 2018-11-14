@@ -1,11 +1,14 @@
 import pymongo
 import configparser
-
+from os.path import isfile
+from criptografia import encrypt, decrypt
 
 glob_tweet_count = 0
 
 # Carrega senha para acesso ao banco de dados
 config = configparser.ConfigParser()
+if not isfile('config.ini'):
+    decrypt('config.ini.enc')
 config.read('config.ini')
 password = config['MONGODB']['password']
 

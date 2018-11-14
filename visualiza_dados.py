@@ -5,10 +5,14 @@ import matplotlib.pyplot as plt
 from matplotlib import rcParams
 rcParams.update({'figure.autolayout': True})
 from wordcloud import WordCloud
-
+from os.path import isfile
+from criptografia import encrypt, decrypt
 
 # Carrega senha para acesso ao banco de dados
 config = configparser.ConfigParser()
+# Descriptografar
+if not isfile('config.ini'):
+    decrypt('config.ini.enc')
 config.read('config.ini')
 password = config['MONGODB']['password']
 
