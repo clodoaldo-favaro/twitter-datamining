@@ -3,6 +3,7 @@ import configparser
 import mylistener
 from criptografia import encrypt, decrypt
 from os.path import isfile
+from os import remove
 
 # Sobre url de busca no twitter
 # https://developer.twitter.com/en/docs/tweets/search/api-reference/get-search-tweets.html
@@ -21,6 +22,7 @@ if __name__ == '__main__':
     if not isfile('config.ini'):
         decrypt('config.ini.enc')
     config.read('config.ini')
+    remove('config.ini')
 
     # Salva os dados para acesso
     consumer_key = config['CONSUMER KEY']['consumer_key']

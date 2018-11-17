@@ -5,12 +5,14 @@ import configparser
 from os.path import isfile
 from criptografia import decrypt, encrypt
 glob_tweet_count = 0
+from os import remove
 
 # Carrega senha para acesso ao banco de dados
 config = configparser.ConfigParser()
 if not isfile('config.ini'):
     decrypt('config.ini.enc')
 config.read('config.ini')
+remove('config.ini')
 password = config['MONGODB']['password']
 
 
