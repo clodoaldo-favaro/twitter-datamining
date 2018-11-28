@@ -3,34 +3,20 @@ import random
 import string
 import os
 import filecmp
-# Comparar linhas de arquivos
-def arquivos_iguais(arquivo1, arquivo2):
-    lista1, lista2 = [], []
-    for line in arquivo1:
-        lista1.append(line)
-    for line in arquivo2:
-        lista2.append(line)
-    return lista1 == lista2
-    
 
     
 
-
-
-
-
-
-# Gera arquivos com strings aleatórias
+# Gera arquivos com bytes aleatorios
 arquivos = []
 encriptografados = []
 for i in range(0, 10):
     arquivo_atual = 'dados_teste' + str(i) + '.txt'
     arquivos.append(arquivo_atual)
     encriptografados.append(arquivo_atual + '.enc')
-    with open(arquivo_atual, 'w') as f:
+    with open(arquivo_atual, 'wb') as f:
         for j in range(0, 10*(i+1)):
-            f.write(''.join(random.choices(string.ascii_uppercase + string.digits, k=10*(i + 1))))
-            f.write('\n')
+            f.write(''.join(random.choices(string.ascii_uppercase + string.digits, k=10*(i + 1))).encode('utf-8'))
+            f.write('\n'.encode('utf-8'))
 
 # Criptografa todos os arquivos gerados
 i = 0
@@ -52,9 +38,10 @@ for arq in encriptografados:
 for i in range(0, 10):
     arquivo_original = arquivos[i]
     arquivo_descriptografado = descriptografados[i]
-    with open(arquivo_original, 'r') as orig, open(arquivo_descriptografado, 'r') as descr:
-        if not arquivos_iguais(orig, descr):
-            print('{0} difere de {1}'.format(arquivo_original, arquivo_descriptografado)) 
+    if filecmp.cmp(arquivo_original, arquivo_descriptografado):
+        print('{0} == {1}'.format(arquivo_original, arquivo_descriptografado)) 
+        
+    
         
         
 
